@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoFragment">
+
+    <TextView
+        android:id="@+id/cardNotFoundTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/card_not_found_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fragment_info_values_text_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/connectionFailureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/connection_failure_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fragment_info_values_text_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:fillViewport="false"
+        android:foregroundGravity="center"
+        android:scrollbars="none"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:paddingBottom="8dp"
+            android:stretchColumns="1, 0">
+
+            <TableRow
+                android:id="@+id/cardLabelRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/cardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/card_label"
+                    android:textSize="@dimen/fragment_info_labels_text_size" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/cardSchemeTypeRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <LinearLayout
+                    android:id="@+id/cardSchemeLayout"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cardSchemeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/scheme_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/cardSchemeValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardTypeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cardTypeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/type_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <LinearLayout
+                        android:id="@+id/cardTypeValuesLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/typeDebitTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/type_left"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+
+                        <TextView
+                            android:id="@+id/slashTypeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="@string/slash"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+
+                        <TextView
+                            android:id="@+id/typeCreditTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/type_right"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/cardBrandPrepaidRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/cardBrandLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cardBrandTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/brand_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/cardBrandValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardPrepaidLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cardPrepaidTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/prepaid_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <LinearLayout
+                        android:id="@+id/cardPrepaidValuesLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/prepaidYesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/prepaidYes"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+
+                        <TextView
+                            android:id="@+id/prepaidSlash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="@string/slash"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+
+                        <TextView
+                            android:id="@+id/prepaidNoTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/prepaidNo"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/cardValuesRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/cardLengthLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cardLengthTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/card_number_length_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/cardLengthValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardLuhnLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cardLuhnTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/card_number_luhn_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <LinearLayout
+                        android:id="@+id/cardLuhnValuesLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/cardNumberLuhnYesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/luhnYes"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+
+                        <TextView
+                            android:id="@+id/luhnSlash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="@string/slash"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+
+                        <TextView
+                            android:id="@+id/cardLuhnNoTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/luhnNo"
+                            android:textSize="@dimen/fragment_info_values_text_size" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/countryDividerTableRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <View
+                    android:id="@+id/countryDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_span="2"
+                    android:background="?android:attr/listDivider" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/countryRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/countryTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/country_label"
+                    android:textSize="@dimen/fragment_info_labels_text_size" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/countryValuesRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/countryNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/countryNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/country_name_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/countryNameValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="map"
+                        android:linksClickable="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/countryCurrenctLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/currencyTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/country_currency_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/countryCurrencyValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bankDividerRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <View
+                    android:id="@+id/bankDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_span="2"
+                    android:background="?android:attr/listDivider" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bankLabelRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/bankLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:text="@string/bank_label"
+                    android:textSize="@dimen/fragment_info_labels_text_size" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bankNameCityRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp">
+
+                <LinearLayout
+                    android:id="@+id/bankNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bankNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/bank_name_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/bankNameValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bankCityLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bankCityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/bank_city_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/bankCityValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:autoLink="map"
+                        android:textColor="@color/black"
+                        android:textColorLink="@android:color/holo_blue_dark"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/bankUrlPhoneRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/bankUrlLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bankUrlTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/bank_url_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/bankUrlValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:textColor="@color/black"
+                        android:textColorLink="@android:color/holo_blue_dark"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bankPhoneLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bankPhoneTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/bank_phone_label"
+                        android:textColor="@color/small_label_color"
+                        android:textSize="@dimen/fragment_info_labels_small_text_size" />
+
+                    <TextView
+                        android:id="@+id/bankPhoneValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:autoLink="phone"
+                        android:textColor="@color/black"
+                        android:textColorLink="@android:color/holo_blue_dark"
+                        android:textSize="@dimen/fragment_info_values_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

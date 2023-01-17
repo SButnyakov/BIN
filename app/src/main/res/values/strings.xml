@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">BIN</string>
+    <string name="switch_fragment_anim_duration">300</string>
+
+    <!-- START OF SEARCH FRAGMENT -->
+    <string name="hint_text">hint: 6 digits</string>
+    <!-- END OF SEARCH FRAGMENT -->
+
+    <!-- START OF INFO FRAGMENT -->
+    <string name="scheme_label">SCHEME / NETWORK</string>
+    <string name="type_label">TYPE</string>
+    <string name="brand_label">BRAND</string>
+    <string name="prepaid_label">PREPAID</string>
+    <string name="card_label">CARD</string>
+    <string name="card_number_length_label">LENGTH</string>
+    <string name="card_number_luhn_label">LUHN</string>
+    <string name="country_label">COUNTRY</string>
+    <string name="country_name_label">NAME</string>
+    <string name="country_currency_label">CURRENCY</string>
+    <string name="bank_label">BANK</string>
+    <string name="bank_name_label">NAME</string>
+    <string name="bank_url_label">URL</string>
+    <string name="bank_city_label">CITY</string>
+    <string name="bank_phone_label">PHONE</string>
+    <string name="test">🇩🇰 United States of America</string>
+    <string name="test1">USD</string>
+    <string name="slash">/</string>
+    <string name="type_left">Debit</string>
+    <string name="type_right">Credit</string>
+    <string name="prepaidYes">Yes</string>
+    <string name="prepaidNo">No</string>
+    <string name="luhnYes">Yes</string>
+    <string name="luhnNo">No</string>
+    <string name="card_not_found_label">CARD NOT FOUND</string>
+    <string name="connection_failure_label">CONNECTION FAILURE</string>
+    <!-- END OF INFO FRAGMENT -->
+
+    <!-- START OF HISTORY FRAGMENT -->
+    <string name="no_records_found_label">NO RECORDS FOUND</string>
+    <string name="dot">⬤</string>
+    <!-- END OF HISTORY FRAGMENT -->
+</resources>
