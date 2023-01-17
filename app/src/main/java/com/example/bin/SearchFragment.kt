@@ -36,7 +36,7 @@ class SearchFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.bin.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE && binding.bin.text.length == 8) {
+            if (actionId == EditorInfo.IME_ACTION_DONE && binding.bin.text.length == 6) {
                 activity?.intent?.putExtra("binNumber", binding.bin.text.toString())
                 findNavController().navigate(R.id.action_searchFragment_to_infoFragment)
             }
