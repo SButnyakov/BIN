@@ -1,7 +1,6 @@
 package com.example.bin
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
@@ -20,11 +19,9 @@ import com.example.bin.databinding.FragmentInfoBinding
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class InfoFragment: Fragment() {
     private var _binding: FragmentInfoBinding? = null
@@ -41,7 +38,14 @@ class InfoFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        retrieveCardInfo(activity?.intent?.extras?.get("binNumber") as String)
+        val cardCompleted = activity?.intent?.extras?.get("binNumberCompleted")
+        if (cardCompleted != null) {
+            activity?.intent?.removeExtra("binNumberCompleted")
+            retrieveCardInfoFromRealm(cardCompleted as String)
+        } else {
+            retrieveCardInfoFromAPI(activity?.intent?.extras?.get("binNumber") as String)
+        }
+
     }
 
     override fun onDestroyView() {
@@ -52,11 +56,44 @@ class InfoFragment: Fragment() {
         _binding = null
     }
 
-    private fun retrieveCardInfo(bin: String) {
-        val retriever = CardRetriever()
-
+    private fun retrieveCardInfoFromRealm(bin: String) {
         val config = RealmConfiguration.create(schema = setOf(Request::class))
         val realm: Realm = Realm.open(config)
+
+        val request = realm.query<Request>("bin == $0", bin).first().find()
+
+        val card = Card(
+            CardNumber(request?.numberLength, request?.numberLuhn), request?.scheme,
+            request?.type, request?.brand, request?.prepaid, CardCountry(request?.countryName,
+                request?.countryEmoji, request?.countryCurrency), CardBank(request?.bankName,
+                request?.bankUrl, request?.bankPhone, request?.bankCity))
+
+        fillTable(card)
+
+        realm.writeBlocking {
+            findLatest(request!!)?.let { delete(it) }
+
+            copyToRealm(Request().apply {
+                this.bin = bin
+                scheme = card.scheme
+                type = card.type
+                brand = card.brand
+                prepaid = card.prepaid
+                numberLength = card.number?.length
+                numberLuhn = card.number?.luhn
+                countryName = card.country?.name
+                countryEmoji = card.country?.emoji
+                countryCurrency = card.country?.currency
+                bankName = card.bank?.name
+                bankUrl = card.bank?.url
+                bankPhone = card.bank?.phone
+                bankCity = card.bank?.city
+            })
+        }
+    }
+
+    private fun retrieveCardInfoFromAPI(bin: String) {
+        val retriever = CardRetriever()
 
         val callback = object: Callback<Card> {
             override fun onResponse(call: Call<Card>, response: Response<Card>) {
@@ -67,11 +104,14 @@ class InfoFragment: Fragment() {
                 } else {
                     fillTable(response.body()!!)
 
-                    realm.writeBlocking {
-                        val card = realm.query<Request>("bin == $0", bin).first().find()
+                    val config = RealmConfiguration.create(schema = setOf(Request::class))
+                    val realm: Realm = Realm.open(config)
 
-                        if (card != null) {
-                            findLatest(card)?.let { delete(it) }
+                    realm.writeBlocking {
+                        val request = realm.query<Request>("bin == $0", bin).first().find()
+
+                        if (request != null) {
+                            findLatest(request)?.let { delete(it) }
                         }
 
                         copyToRealm(Request().apply {
@@ -84,6 +124,7 @@ class InfoFragment: Fragment() {
                             numberLength = card.number?.length
                             numberLuhn = card.number?.luhn
                             countryName = card.country?.name
+                            countryEmoji = card.country?.emoji
                             countryCurrency = card.country?.currency
                             bankName = card.bank?.name
                             bankUrl = card.bank?.url
@@ -111,13 +152,9 @@ class InfoFragment: Fragment() {
         setYesOrNo(card.prepaid, binding.prepaidYesTextView, binding.prepaidNoTextView)
         setValue(card.number?.length, binding.cardLengthValueTextView)
         setYesOrNo(card.number?.luhn, binding.cardNumberLuhnYesTextView, binding.cardLuhnNoTextView)
+        setValue(card.country?.emoji, binding.countryEmojiValueTextView)
 
         if (card.country?.name != null) {
-
-            if (card.country.emoji != null) {
-                card.country.name = "${card.country.emoji} ${card.country.name}"
-            }
-
             val spanString = SpannableString(card.country.name)
             spanString.setSpan(UnderlineSpan(), 0, spanString.length, 0)
             binding.countryNameValueTextView.text = spanString
@@ -232,9 +269,7 @@ class InfoFragment: Fragment() {
     }
 
     private fun startMap(place: String) {
-        val nameArr = place.split(' ')
-        val name = if (nameArr.size > 1) nameArr[1] else nameArr[0]
-        val uri = "https://www.google.com/maps/search/?api=1&query=${name}"
+        val uri = "https://www.google.com/maps/search/?api=1&query=${place}"
         val mapAppIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         mapAppIntent.setPackage("com.google.android.apps.maps")
         startActivity(mapAppIntent)
