@@ -30,7 +30,7 @@ class RequestAdapter(private val requests: List<Request>): RecyclerView.Adapter
         holder.addRequestRecord(requests[position])
         holder.itemView.setOnClickListener{
             val activity = it.context as AppCompatActivity
-            activity.intent.putExtra("binNumber", requests[position].bin)
+            activity.intent.putExtra("binNumberCompleted", requests[position].bin)
             holder.view.findNavController().navigate(R.id.action_historyFragment_to_infoFragment)
         }
     }
