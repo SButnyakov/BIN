@@ -14,6 +14,7 @@ class Request : RealmObject {
     var numberLength: String? = null
     var numberLuhn: Boolean? = null
     var countryName: String? = null
+    var countryEmoji: String? = null
     var countryCurrency: String? = null
     var bankName: String? = null
     var bankUrl: String? = null
